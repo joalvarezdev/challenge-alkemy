@@ -2,7 +2,7 @@ package com.joalvarez.challengealkemy.data.dao.generals;
 
 import com.joalvarez.challengealkemy.data.model.generals.MultitenantEntity;
 import com.joalvarez.challengealkemy.data.repository.generals.MultitenantRepository;
-import com.joalvarez.challengealkemy.service.LocalStorage;
+import com.joalvarez.challengealkemy.utils.LocalStorage;
 
 import java.util.List;
 import java.util.UUID;

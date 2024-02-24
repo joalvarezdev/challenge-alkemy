@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@SpringBootApplication()
+@SpringBootApplication
 public class ApiChallengeAlkemyApplication {
 
 	private ObjectMapper objectMapper;

@@ -25,10 +25,12 @@ public class SecurityConfig {
 
 	private final SecurityProperties properties;
 	private final AuthenticationConfiguration authenticationConfiguration;
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception {
 		return this.authenticationConfiguration.getAuthenticationManager();
@@ -44,6 +46,9 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.authorizeHttpRequests(auth -> {
 
+//				auth.requestMatchers(HttpMethod.GET, "/characters").hasRole("ADMIN");
+				auth.requestMatchers("/**").permitAll();
+/*
 				auth.requestMatchers("/users/register").hasRole("ADMIN");
 
 				this.properties.getEndpoints().forEach(endpoint -> {
@@ -52,6 +57,7 @@ public class SecurityConfig {
 
 				auth.requestMatchers(this.properties.getExcludedPaths()).permitAll()
 					.anyRequest().authenticated();
+*/
 			})
 			.addFilter(new JwtAuthenticationFilter(this.authenticationManager()))
 			.addFilter(new JwtValidationFilter(this.authenticationManager()))

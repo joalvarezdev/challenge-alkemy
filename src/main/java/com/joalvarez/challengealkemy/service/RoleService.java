@@ -29,7 +29,7 @@ public class RoleService extends GenericService<RoleDAO, RoleMapper> implements 
 	}
 
 	@Override
-	public RoleDTO update(RoleDTO roleDTO) {
+	public RoleDTO update(RoleDTO roleDTO, Long id) {
 		throw new NotImplementedException();
 	}
 
