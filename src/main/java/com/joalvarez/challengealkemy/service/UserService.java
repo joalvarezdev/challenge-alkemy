@@ -42,7 +42,7 @@ public class UserService extends GenericService<UserDAO, UserMapper> implements 
 	}
 
 	@Override
-	public UserDTO update(UserDTO userDTO) {
+	public UserDTO update(UserDTO userDTO, Long id) {
 		throw new NotImplementedException();
 	}
 

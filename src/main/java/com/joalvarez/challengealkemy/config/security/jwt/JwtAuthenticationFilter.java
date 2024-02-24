@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Claims claims = Jwts.claims()
 			.add("id_user", user.getId())
 			.add("username", user.getUsername())
-			.add("authorities", roles)
+			.add("authorities", Utils.objectToJson(roles))
 			.add("tenant", user.getUserId())
 			.build();
 
