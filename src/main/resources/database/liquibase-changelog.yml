@@ -36,6 +36,33 @@ databaseChangeLog:
             path: ddl/03-user_roles.sql
             relativeToChangeLogFile: true
             endDelimiter: ;
+  - changeSet:
+      id: characters_table
+      author: joalvarez
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ddl/04-characters.sql
+            relativeToChangeLogFile: true
+            endDelimiter: ;
+  - changeSet:
+      id: movies_table
+      author: joalvarez
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ddl/05-movies.sql
+            relativeToChangeLogFile: true
+            endDelimiter: ;
+  - changeSet:
+      id: genres_table
+      author: joalvarez
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ddl/05-genres.sql
+            relativeToChangeLogFile: true
+            endDelimiter: ;
 
 # REGISTRY
   - changeSet:
