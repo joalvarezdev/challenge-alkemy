@@ -1,6 +1,8 @@
 package com.joalvarez.challengealkemy.service.generals;
 
-public abstract class GenericService<DAO, MAP> {
+import com.joalvarez.challengealkemy.shared.HasLogger;
+
+public abstract class GenericService<DAO, MAP> implements HasLogger {
 
 	protected final MAP mapper;
 	protected final DAO dao;
