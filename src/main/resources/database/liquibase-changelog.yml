@@ -60,7 +60,7 @@ databaseChangeLog:
       runOnChange: true
       changes:
         - sqlFile:
-            path: ddl/05-genres.sql
+            path: ddl/06-genres.sql
             relativeToChangeLogFile: true
             endDelimiter: ;
 

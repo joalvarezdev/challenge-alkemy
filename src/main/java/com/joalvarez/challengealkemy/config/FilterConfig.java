@@ -28,7 +28,9 @@ public class FilterConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+/*
 		registry.addInterceptor(this.tenantInterceptor)
 			.excludePathPatterns(EXCLUDE_PATH);
+*/
 	}
 }

@@ -1,6 +1,6 @@
 package com.joalvarez.challengealkemy.utils;
 
-import com.joalvarez.challengealkemy.data.dto.UserDetailsDTO;
+import com.joalvarez.challengealkemy.data.dto.generals.UserDetailsDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

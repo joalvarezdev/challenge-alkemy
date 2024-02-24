@@ -1,7 +1,7 @@
 package com.joalvarez.challengealkemy.interceptor;
 
 import com.joalvarez.challengealkemy.config.security.jwt.JwtConstants;
-import com.joalvarez.challengealkemy.service.LocalStorage;
+import com.joalvarez.challengealkemy.utils.LocalStorage;
 import com.joalvarez.challengealkemy.shared.HasLogger;
 
 import jakarta.servlet.http.HttpServletRequest;
