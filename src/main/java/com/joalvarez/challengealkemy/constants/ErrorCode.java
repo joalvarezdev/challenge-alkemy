@@ -17,6 +17,12 @@ public enum ErrorCode implements IResponse {
 	// * GENRES
 	GENRE_ALREADY_EXISTS(8008, "The genre already exists."),
 	GENRE_NOT_FOUND(8009, "The genre doesn't exist."),
+
+	// * MOVIES
+	MOVIE_ALREADY_EXISTS(8010, "The movie already exists."),
+	MOVIE_NOT_FOUND(8011, "The movie doesn't exist."),
+	MOVIE_NOT_FOUND_BY_TITLE(8012, "The movie doesn't exist by title."),
+
 	;
 
 	private final int code;
