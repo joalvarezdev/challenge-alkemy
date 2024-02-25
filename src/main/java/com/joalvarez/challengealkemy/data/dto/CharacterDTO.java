@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class CharacterDTO implements BaseDTO {
 
-	private Long id;
+	private Long characterId;
 	@NotBlank(message = "Name is required")
 	private String name;
 	private String image;
@@ -17,12 +17,12 @@ public class CharacterDTO implements BaseDTO {
 	@NotBlank(message = "History is required")
 	private String history;
 
-	public Long getId() {
-		return id;
+	public Long getCharacterId() {
+		return characterId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCharacterId(Long characterId) {
+		this.characterId = characterId;
 	}
 
 	public String getName() {

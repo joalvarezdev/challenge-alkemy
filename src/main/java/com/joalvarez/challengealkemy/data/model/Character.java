@@ -8,7 +8,7 @@ public class Character {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long characterId;
 	private String name;
 	private String image;
 	private Integer age;
@@ -16,12 +16,12 @@ public class Character {
 	private String history;
 
 
-	public Long getId() {
-		return id;
+	public Long getCharacterId() {
+		return characterId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCharacterId(Long id) {
+		this.characterId = id;
 	}
 
 	public String getName() {
