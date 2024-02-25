@@ -16,7 +16,7 @@ public class Movie {
 	private String image;
 	private LocalDate creationDate;
 	private Integer rating;
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(
 		name = "movies_genres",
 		joinColumns = @JoinColumn(name = "movie_id"),
