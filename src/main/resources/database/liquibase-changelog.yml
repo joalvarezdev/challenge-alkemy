@@ -72,6 +72,15 @@ databaseChangeLog:
             path: ddl/07-movies_genres.sql
             relativeToChangeLogFile: true
             endDelimiter: ;
+  - changeSet:
+      id: movies_characters_table
+      author: joalvarez
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: ddl/08-movies_characters.sql
+            relativeToChangeLogFile: true
+            endDelimiter: ;
 
 # REGISTRY
   - changeSet:
