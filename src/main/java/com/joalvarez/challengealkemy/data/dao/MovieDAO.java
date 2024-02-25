@@ -14,7 +14,7 @@ public class MovieDAO extends GenericDAO<MovieRepository, Movie, Long> {
 		super(repository);
 	}
 
-	public boolean findByTitle(String title) {
+	public boolean existsByTitle(String title) {
 		return this.repository.findByTitle(title).isPresent();
 	}
 

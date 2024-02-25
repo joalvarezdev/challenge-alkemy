@@ -19,6 +19,7 @@ public class MovieDTO implements BaseDTO {
 	@Max(value = 5)
 	private Integer rating;
 	private List<GenreDTO> genres;
+	private List<CharacterDTO> characters;
 
 	public Long getId() {
 		return id;
@@ -66,5 +67,13 @@ public class MovieDTO implements BaseDTO {
 
 	public void setGenres(List<GenreDTO> genres) {
 		this.genres = genres;
+	}
+
+	public List<CharacterDTO> getCharacters() {
+		return characters;
+	}
+
+	public void setCharacters(List<CharacterDTO> characters) {
+		this.characters = characters;
 	}
 }

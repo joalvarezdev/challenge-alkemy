@@ -32,7 +32,7 @@ public class CharacterService extends GenericService<CharacterDAO, CharacterMapp
 
 	@Override
 	public CharacterDTO findById(Long id) {
-		throw new NotImplementedException();
+		return this.mapper.toDTO(this.dao.findById(id));
 	}
 
 	@Override

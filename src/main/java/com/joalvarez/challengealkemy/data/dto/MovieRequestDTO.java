@@ -19,6 +19,8 @@ public record MovieRequestDTO(
 	@Max(value = 5)
 	Integer rating,
 	@NotEmpty
-	List<Long> genres
+	List<Long> genres,
+	@NotEmpty
+	List<Long> characters
 ) implements BaseDTO {
 }

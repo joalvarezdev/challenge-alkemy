@@ -23,6 +23,13 @@ public class Movie {
 		inverseJoinColumns = @JoinColumn(name = "genre_id")
 	)
 	private List<Genre> genres;
+	@ManyToMany
+	@JoinTable(
+		name = "movies_characters",
+		joinColumns = @JoinColumn(name = "movie_id"),
+		inverseJoinColumns = @JoinColumn(name = "character_id")
+	)
+	private List<Character> characters;
 
 
 	public Long getId() {
@@ -71,5 +78,13 @@ public class Movie {
 
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
+	}
+
+	public List<Character> getCharacters() {
+		return characters;
+	}
+
+	public void setCharacters(List<Character> characters) {
+		this.characters = characters;
 	}
 }

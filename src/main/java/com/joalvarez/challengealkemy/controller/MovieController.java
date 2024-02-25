@@ -54,4 +54,16 @@ public class MovieController {
 	public ResponseEntity<MovieDTO> findById(@PathVariable Long id){
 		return ResponseEntity.ok(this.service.findById(id));
 	}
+
+	@PostMapping("{id}/characters/{idCharacter}")
+	@Operation(summary = "Add a character to a movie")
+	public ResponseEntity<MovieDTO> addCharacter(@PathVariable Long id, @PathVariable Long idCharacter) {
+		return ResponseEntity.ok(this.service.addCharacter(id, idCharacter));
+	}
+
+	@DeleteMapping("{id}/characters/{idCharacter}")
+	@Operation(summary = "Delete a character from a movie")
+	public ResponseEntity<MovieDTO> deleteCharacter(@PathVariable Long id, @PathVariable Long idCharacter) {
+		return ResponseEntity.ok(this.service.deleteCharacter(id, idCharacter));
+	}
 }

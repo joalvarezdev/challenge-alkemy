@@ -22,4 +22,8 @@ public interface IMovieService extends IBaseService<MovieDTO, Long> {
     MovieDTO save(MovieRequestDTO dto);
 
 	Page<MovieDTO> findAll(Pageable pageable);
+
+	MovieDTO addCharacter(Long id, Long idCharacter);
+
+	MovieDTO deleteCharacter(Long id, Long idCharacter);
 }
