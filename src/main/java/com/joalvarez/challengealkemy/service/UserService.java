@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UserService extends GenericService<UserDAO, UserMapper> implements IUserService<UserDTO> {
+public class UserService extends GenericService<UserDAO, UserMapper> implements IUserService {
 
 	private final IRoleService<RoleDTO> roleService;
 	private final PasswordEncoder passwordEncoder;

@@ -3,7 +3,9 @@ package com.joalvarez.challengealkemy.config.security.jwt;
 import static com.joalvarez.challengealkemy.config.security.jwt.JwtConstants.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joalvarez.challengealkemy.constants.ErrorCode;
 import com.joalvarez.challengealkemy.data.model.User;
+import com.joalvarez.challengealkemy.exception.generals.AuthException;
 import com.joalvarez.challengealkemy.shared.HasLogger;
 import com.joalvarez.challengealkemy.utils.Utils;
 import io.jsonwebtoken.Claims;
@@ -22,10 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements HasLogger {
@@ -39,13 +38,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		User user = null;
-		try {
-			user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+        try {
+            user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+        } catch (IOException e) {
+			throw new AuthException(ErrorCode.USER_NOT_AUTHENTICATED.message(), e);
+        }
+
+		var username = user.getUsername();
+		var password = user.getPassword();
+
+		if (Objects.isNull(username) || Objects.isNull(password)) {
+			throw new AuthException(ErrorCode.USER_BAD_CREDENTIALS.message());
 		}
 
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 
 		return this.authenticationManager.authenticate(authenticationToken);
 	}
@@ -90,8 +96,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		throws IOException, ServletException {
 
 		Map<String, String> body = new HashMap<>();
-		body.put("message", "Error en la autenticacion username o password incorrectos!");
-		body.put("error", failed.getMessage());
+		body.put("message", failed.getMessage());
 
 		this.setReponse(response, body, HttpStatus.UNAUTHORIZED, MediaType.APPLICATION_JSON);
 	}

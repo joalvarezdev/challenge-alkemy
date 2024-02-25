@@ -1,5 +1,5 @@
 ### LOGIN | ADMIN
-POST {{base-url}}/login
+POST {{base-url}}/auth/login
 Content-Type: application/json
 
 {

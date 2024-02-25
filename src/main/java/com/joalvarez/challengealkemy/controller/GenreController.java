@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("genres")
+@SecurityRequirement(name = "Bearer Authentication")
 public class GenreController {
 
 	private final IGenreService service;
@@ -27,7 +28,6 @@ public class GenreController {
 	@Operation(summary = "Get all genres")
 	@ApiResponse(responseCode = "200", description = "Successful operation",
 		content = @Content(mediaType = "application/json", schema = @Schema(implementation = GenreDTO[].class)))
-	//@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<List<GenreDTO>> findAll() {
 		return ResponseEntity.ok(this.service.findAll());
 	}
@@ -36,7 +36,6 @@ public class GenreController {
 	@Operation(summary = "Create a new genre")
 	@ApiResponse(responseCode = "201", description = "Successful operation",
 		content = @Content(mediaType = "application/json", schema = @Schema(implementation = GenreDTO.class)))
-	//@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<GenreDTO> save(@RequestBody GenreDTO dto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.create(dto));
 	}
@@ -45,7 +44,6 @@ public class GenreController {
 	@Operation(summary = "Update a genre")
 	@ApiResponse(responseCode = "200", description = "Successful operation",
 		content = @Content(mediaType = "application/json", schema = @Schema(implementation = GenreDTO.class)))
-	//@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<GenreDTO> update(@RequestBody GenreDTO dto, @PathVariable Long id) {
 		return ResponseEntity.ok(this.service.update(dto, id));
 	}
