@@ -18,8 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
-
 @Configuration
 public class SecurityConfig {
 
@@ -46,10 +44,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.authorizeHttpRequests(auth -> {
 
-//				auth.requestMatchers(HttpMethod.GET, "/characters").hasRole("ADMIN");
-				auth.requestMatchers("/**").permitAll();
-/*
-				auth.requestMatchers("/users/register").hasRole("ADMIN");
+				auth.requestMatchers("/auth/**").permitAll();
 
 				this.properties.getEndpoints().forEach(endpoint -> {
 					auth.requestMatchers(endpoint.getPath()).hasAnyRole(endpoint.getAuthorities().toArray(String[]::new));
@@ -57,12 +52,12 @@ public class SecurityConfig {
 
 				auth.requestMatchers(this.properties.getExcludedPaths()).permitAll()
 					.anyRequest().authenticated();
-*/
 			})
-			.addFilter(new JwtAuthenticationFilter(this.authenticationManager()))
+			.addFilter(this.jwtAuthenticationFilter())
 			.addFilter(new JwtValidationFilter(this.authenticationManager()))
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(Customizer.withDefaults())
+			.formLogin(formLoginConfigurer -> formLoginConfigurer.loginPage("/auth/login"))
 			.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.build();
 	}
@@ -84,5 +79,16 @@ public class SecurityConfig {
 					.allowedHeaders("*");
 			}
 		};
+	}
+
+	/**
+	 * Creates and configure a JwtAuthenticationFilter.
+	 * @return
+	 * @throws Exception
+	 */
+	private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+		var filter = new JwtAuthenticationFilter(this.authenticationManager());
+		filter.setFilterProcessesUrl("/auth/login");
+		return filter;
 	}
 }

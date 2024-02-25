@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/characters")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CharacterController {
 
 	private final ICharacterService service;
@@ -30,7 +31,6 @@ public class CharacterController {
 	@Operation(summary = "Get all paginated characters with optional sorting and filtering.")
 	@ApiResponse(responseCode = "200", description = "Successful operation",
 		content = @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterDTO.class)))
-	//@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<Page<CharacterDTO>> findAll(
 		@Parameter(hidden = true) Pageable pageable,
 		@Parameter(name = "page", description = "Page number", schema = @Schema(type = "integer"))

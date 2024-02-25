@@ -41,5 +41,9 @@ api.security:
   origins:
     - "*"
   endpoints:
-    - path: /example/**
+    - path: /movies/**
+      authorities: [ADMIN, USER]
+    - path: /characters/**
+      authorities: [ADMIN, USER]
+    - path: /genres/**
       authorities: [ADMIN, USER]

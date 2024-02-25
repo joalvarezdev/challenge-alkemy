@@ -23,7 +23,7 @@ public class FilterConfig implements WebMvcConfigurer {
 		"/swagger-ui.html",
 		"/swagger-resources/**",
 		"/webjars/**",
-		"/login"
+		"/auth/**"
 	).toList();
 
 	@Override

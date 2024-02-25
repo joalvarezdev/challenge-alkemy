@@ -1,8 +1,9 @@
 package com.joalvarez.challengealkemy.service.interfaces;
 
+import com.joalvarez.challengealkemy.data.dto.UserDTO;
 import com.joalvarez.challengealkemy.service.generals.IBaseService;
 
-public interface IUserService<DTO> extends IBaseService<DTO, Long>{
+public interface IUserService extends IBaseService<UserDTO, Long>{
 
-	DTO register(DTO dto);
+	UserDTO register(UserDTO dto);
 }

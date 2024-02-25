@@ -36,7 +36,16 @@ public class MovieService extends GenericService<MovieDAO, MovieMapper> implemen
 
 	@Override
 	public MovieDTO findById(Long id) {
-		return this.mapper.toDTO(this.dao.findById(id));
+		var movie = this.dao.findById(id);
+
+		if (Objects.isNull(movie)) {
+			throw new GenericException(
+				HttpStatus.BAD_REQUEST,
+				ErrorCode.MOVIE_NOT_FOUND
+			);
+		}
+
+		return this.mapper.toDTO(movie);
 	}
 
 	@Override
