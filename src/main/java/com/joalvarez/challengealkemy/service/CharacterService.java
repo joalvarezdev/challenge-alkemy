@@ -32,7 +32,7 @@ public class CharacterService extends GenericService<CharacterDAO, CharacterMapp
 
 	@Override
 	public CharacterDTO findById(Long id) {
-		throw new NotImplementedException();
+		return this.mapper.toDTO(this.dao.findById(id));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class CharacterService extends GenericService<CharacterDAO, CharacterMapp
 		var entity = this.dao.findById(id);
 		var comparedEntity = this.dao.findByName(dto.getName());
 
-		if (comparedEntity.isPresent() && !Objects.equals(comparedEntity.get().getId(), id)) {
+		if (comparedEntity.isPresent() && !Objects.equals(comparedEntity.get().getCharacterId(), id)) {
 			throw new GenericException(
 				HttpStatus.NOT_FOUND,
 				ErrorCode.CHARACTER_NAME_ALREADY_EXISTS
