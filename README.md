@@ -14,7 +14,9 @@ Proyecto practica implementando lo solicitado en un [challenge](CHALLENGE.md), p
 
 ## :gear: Configuración
 
+### Estructura Base de Datos
 
+![DB](database-structure.png)
 
 ## :key: Licencia
 
