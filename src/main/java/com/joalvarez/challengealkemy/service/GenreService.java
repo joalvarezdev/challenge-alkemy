@@ -29,7 +29,7 @@ public class GenreService extends GenericService<GenreDAO, GenreMapper> implemen
 
 	@Override
 	public GenreDTO findById(Long id) {
-		throw new NotImplementedException();
+		return this.mapper.toDTO(this.dao.findById(id));
 	}
 
 	@Override

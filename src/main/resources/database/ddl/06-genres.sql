@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS genres (
-    id SERIAL NOT NULL,
+    genre_id SERIAL NOT NULL,
     name VARCHAR(255) NOT NULL,
     image VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_genres PRIMARY KEY (id)
+    CONSTRAINT pk_genres PRIMARY KEY (genre_id)
 )

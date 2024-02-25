@@ -4,16 +4,16 @@ import com.joalvarez.challengealkemy.data.dto.generals.BaseDTO;
 
 public class GenreDTO implements BaseDTO {
 
-	private Long id;
+	private Long genreId;
 	private String name;
 	private String image;
 
-	public Long getId() {
-		return id;
+	public Long getGenreId() {
+		return genreId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setGenreId(Long genreId) {
+		this.genreId = genreId;
 	}
 
 	public String getName() {
