@@ -8,10 +8,21 @@ public enum ErrorCode implements IResponse {
 	CLIENT_BAD_REQUEST_ERROR(8002, "The integration's client indicated an error while performing this operation"),
 	NOT_IMPLEMENTED_ERROR(8003, "The resource you're trying to access or execute isn't implemented yet"),
 	USER_OR_EMAIL_ALREADY_EXISTS(8004, "User or email already exists."),
-	// CHARACTERS
+
+	// * CHARACTERS
 	CHARACTER_ALREADY_EXISTS(8005, "The character already exists."),
 	CHARACTER_NOT_FOUND(8006, "The character doesn't exist."),
 	CHARACTER_NAME_ALREADY_EXISTS(8007, "The character name already exists."),
+
+	// * GENRES
+	GENRE_ALREADY_EXISTS(8008, "The genre already exists."),
+	GENRE_NOT_FOUND(8009, "The genre doesn't exist."),
+
+	// * MOVIES
+	MOVIE_ALREADY_EXISTS(8010, "The movie already exists."),
+	MOVIE_NOT_FOUND(8011, "The movie doesn't exist."),
+	MOVIE_NOT_FOUND_BY_TITLE(8012, "The movie doesn't exist by title."),
+
 	;
 
 	private final int code;

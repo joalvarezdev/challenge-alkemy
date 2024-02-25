@@ -1,29 +1,24 @@
-package com.joalvarez.challengealkemy.data.model;
+package com.joalvarez.challengealkemy.data.dto;
 
-import jakarta.persistence.*;
+import com.joalvarez.challengealkemy.data.dto.generals.BaseDTO;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "movies")
-public class Movie {
+public class MovieDTO implements BaseDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String title;
 	private String image;
 	private LocalDate creationDate;
+	@Min(value = 0)
+	@Max(value = 5)
 	private Integer rating;
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name = "movies_genres",
-		joinColumns = @JoinColumn(name = "movie_id"),
-		inverseJoinColumns = @JoinColumn(name = "genre_id")
-	)
-	private List<Genre> genres;
-
+	private List<GenreDTO> genres;
 
 	public Long getId() {
 		return id;
@@ -65,11 +60,11 @@ public class Movie {
 		this.rating = rating;
 	}
 
-	public List<Genre> getGenres() {
+	public List<GenreDTO> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(List<Genre> genres) {
+	public void setGenres(List<GenreDTO> genres) {
 		this.genres = genres;
 	}
 }

@@ -11,4 +11,8 @@ public class GenreDAO extends GenericDAO<GenreRepository, Genre, Long> {
 	public GenreDAO(GenreRepository repository) {
 		super(repository);
 	}
+
+	public boolean existsByName(String name) {
+		return this.repository.findByName(name).isPresent();
+	}
 }
