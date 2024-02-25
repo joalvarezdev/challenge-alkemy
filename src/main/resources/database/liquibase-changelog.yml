@@ -101,3 +101,12 @@ databaseChangeLog:
             path: dml/03-genres.sql
             relativeToChangeLogFile: true
             endDelimiter: ;
+  - changeSet:
+      id: character_registries
+      author: joalvarez
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: dml/04-characters.sql
+            relativeToChangeLogFile: true
+            endDelimiter: ;
