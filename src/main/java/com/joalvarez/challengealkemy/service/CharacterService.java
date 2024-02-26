@@ -32,7 +32,16 @@ public class CharacterService extends GenericService<CharacterDAO, CharacterMapp
 
 	@Override
 	public CharacterDTO findById(Long id) {
-		return this.mapper.toDTO(this.dao.findById(id));
+		var character = this.dao.findById(id);
+
+		if (Objects.isNull(character)) {
+			throw new GenericException(
+				HttpStatus.NOT_FOUND,
+				ErrorCode.CHARACTER_NOT_FOUND
+			);
+		}
+
+		return this.mapper.toDTO(character);
 	}
 
 	@Override

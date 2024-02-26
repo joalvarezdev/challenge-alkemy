@@ -1,5 +1,6 @@
 package com.joalvarez.challengealkemy.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joalvarez.challengealkemy.config.security.constants.SecurityProperties;
 import com.joalvarez.challengealkemy.config.security.jwt.JwtAuthenticationFilter;
 import com.joalvarez.challengealkemy.config.security.jwt.JwtValidationFilter;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
 	private final SecurityProperties properties;
 	private final AuthenticationConfiguration authenticationConfiguration;
+	private final ObjectMapper mapper;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -35,9 +37,11 @@ public class SecurityConfig {
 	}
 
 	public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,
-						  SecurityProperties properties) {
+						  SecurityProperties properties,
+						  ObjectMapper mapper) {
 		this.authenticationConfiguration = authenticationConfiguration;
 		this.properties = properties;
+		this.mapper = mapper;
 	}
 
 	@Bean
@@ -87,7 +91,7 @@ public class SecurityConfig {
 	 * @throws Exception
 	 */
 	private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-		var filter = new JwtAuthenticationFilter(this.authenticationManager());
+		var filter = new JwtAuthenticationFilter(this.authenticationManager(), this.mapper);
 		filter.setFilterProcessesUrl("/auth/login");
 		return filter;
 	}

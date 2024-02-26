@@ -6,3 +6,7 @@ Content-Type: application/json
   "username": "admin",
   "password": "{{password}}"
 }
+
+### GET CHARACTER
+GET {{base-url}}/characters/3
+Authorization: Bearer {{admin-token}}
