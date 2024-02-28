@@ -31,7 +31,6 @@ public class CharacterServiceTest {
 	@Test
 	public void updateCharacterSuccess() {
 		var validId = 1L;
-		var invalidName = "";
 		var character = this.createCharacter(validId);
 		var characterDTO = this.createCharacterDTO(validId);
 
@@ -49,12 +48,32 @@ public class CharacterServiceTest {
 			() -> assertEquals("image", result.getImage()),
 			() -> assertEquals("history", result.getHistory()),
 			() -> assertEquals(87, result.getWeight()),
-			() -> verify(this.dao, times(4)).existsById(validId),
-			() -> verify(this.dao, times(4)).findById(validId),
-			() -> verify(this.dao, times(4)).findByName(invalidName),
-			() -> verify(this.dao, times(4)).save(character)
+			() -> verify(this.dao, times(1)).existsById(validId),
+			() -> verify(this.dao, times(1)).findById(validId),
+			() -> verify(this.dao, times(1)).findByName(characterDTO.getName()),
+			() -> verify(this.dao, times(1)).save(character),
+			() -> verify(this.mapper, times(1)).toDTO(character)
 		);
 
+	}
+
+	@Test
+	public void throwExceptionWhenCharacterExistByName() {
+		var validNameCharacter = "nameValid";
+		var exists = true;
+
+		var dto = new CharacterDTO();
+		dto.setName(validNameCharacter);
+
+		when(this.dao.existsByName(validNameCharacter)).thenReturn(exists);
+
+		var exception = assertThrows(GenericException.class, () -> this.service.create(dto));
+
+		assertAll(
+			() -> assertEquals(HttpStatus.NOT_FOUND, exception.getCode()),
+			() -> assertEquals("The character already exists.", exception.getMessage()),
+			() -> assertEquals(8005, exception.getResponseCode())
+		);
 	}
 
 	@Test
