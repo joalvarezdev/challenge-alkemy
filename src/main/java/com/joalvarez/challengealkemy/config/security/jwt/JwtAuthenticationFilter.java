@@ -30,16 +30,18 @@ import java.util.*;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter implements HasLogger {
 
 	private final AuthenticationManager authenticationManager;
+	private final ObjectMapper mapper;
 
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper mapper) {
 		this.authenticationManager = authenticationManager;
+		this.mapper = mapper;
 	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		User user = null;
         try {
-            user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            user = this.mapper.readValue(request.getInputStream(), User.class);
         } catch (IOException e) {
 			throw new AuthException(ErrorCode.USER_NOT_AUTHENTICATED.message(), e);
         }
