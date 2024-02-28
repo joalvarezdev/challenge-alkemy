@@ -11,8 +11,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +81,30 @@ public class CharacterServiceTest {
 	}
 
 	@Test
+	public void throwExceptionWhenNameAlreadyExists() {
+		var validId = 2L;
+		var exists = true;
+		var otherId = 1L;
+
+		var character = this.createCharacter(validId);
+		var characterTwo = this.createCharacter(otherId);
+		var characterDTO = this.createCharacterDTO(validId);
+
+
+		when(this.dao.existsById(validId)).thenReturn(exists);
+		when(this.dao.findById(validId)).thenReturn(character);
+		when(this.dao.findByName(characterTwo.getName())).thenReturn(Optional.of(characterTwo));
+
+		var exception = assertThrows(GenericException.class, () -> this.service.update(characterDTO, validId));
+
+		assertAll(
+			() -> assertEquals(HttpStatus.NOT_FOUND, exception.getCode()),
+			() -> assertEquals("The character name already exists.", exception.getMessage()),
+			() -> assertEquals(8007, exception.getResponseCode())
+		);
+	}
+
+	@Test
 	public void throwExceptionWhenFindAllIsCalled() {
 
 		var exception = assertThrows(NotImplementedException.class, () -> service.findAll());
@@ -84,7 +112,32 @@ public class CharacterServiceTest {
 		assertAll(
 			() -> assertEquals(HttpStatus.NOT_IMPLEMENTED, exception.getCode()),
 			() -> assertEquals("The resource you're trying to access or execute isn't implemented yet", exception.getMessage()),
-			() -> assertEquals(8003, exception.getResponseCode())
+			() -> assertEquals(8003, exception.getResponseCode()),
+			() -> verify(this.dao, times(0)).save(any(Character.class))
+		);
+	}
+
+	@Test
+	public void createCharacterSuccess() {
+		var exists = false;
+
+		var dto = this.createCharacterDTO(1L);
+		dto.setCharacterId(null);
+		var entity = this.createCharacter(1L);
+
+		when(this.dao.existsByName(dto.getName())).thenReturn(exists);
+		when(this.mapper.fromDTO(dto)).thenReturn(entity);
+		when(this.dao.save(entity)).thenReturn(entity);
+		when(this.mapper.toDTO(entity)).thenReturn(dto);
+
+		var result = this.service.create(dto);
+
+		assertAll(
+			() -> verify(this.dao, times(1)).existsByName(dto.getName()),
+			() -> verify(this.mapper, times(1)).fromDTO(dto),
+			() -> verify(this.dao, times(1)).save(entity),
+			() -> verify(this.mapper, times(1)).toDTO(entity),
+			() -> assertEquals(dto.getName(), result.getName())
 		);
 	}
 
@@ -99,6 +152,23 @@ public class CharacterServiceTest {
 			() -> assertEquals(HttpStatus.NOT_FOUND, exception.getCode()),
 			() -> assertEquals("The character doesn't exist.", exception.getMessage()),
 			() -> assertEquals(8006, exception.getResponseCode())
+		);
+	}
+
+	@Test
+	public void findByIdSuccessOperation() {
+		var validId = 1L;
+		var character = this.createCharacter(validId);
+		var dto = this.createCharacterDTO(validId);
+
+		when(this.dao.findById(validId)).thenReturn(character);
+		when(this.mapper.toDTO(character)).thenReturn(dto);
+
+		var result = this.service.findById(validId);
+
+		assertAll(
+			() -> assertEquals(validId, result.getCharacterId()),
+			() -> verify(this.dao, times(1)).findById(validId)
 		);
 	}
 
@@ -119,6 +189,21 @@ public class CharacterServiceTest {
 			() -> assertEquals(HttpStatus.NOT_FOUND, exception.getCode()),
 			() -> assertEquals("The character doesn't exist.", exception.getMessage()),
 			() -> assertEquals(8006, exception.getResponseCode())
+		);
+	}
+
+	@Test
+	public void findAllSuccessOperation() {
+		var pageable = PageRequest.of(0, 10);
+		var characters = List.of(new Character(), new Character());
+
+		when(this.dao.findAll(pageable)).thenReturn(new PageImpl<>(characters));
+
+		var result = this.service.findAll(pageable);
+
+		assertAll(
+			() -> verify(this.dao, times(1)).findAll(pageable),
+			() -> assertEquals(characters.size(), result.getSize())
 		);
 	}
 
