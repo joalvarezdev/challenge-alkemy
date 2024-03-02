@@ -2,7 +2,6 @@ package com.joalvarez.challengealkemy.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joalvarez.challengealkemy.config.security.constants.SecurityProperties;
-import com.joalvarez.challengealkemy.config.security.jwt.JwtAuthenticationFilter;
 import com.joalvarez.challengealkemy.config.security.jwt.JwtValidationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,11 +56,10 @@ public class SecurityConfig {
 				auth.requestMatchers(this.properties.getExcludedPaths()).permitAll()
 					.anyRequest().authenticated();
 			})
-			.addFilter(this.jwtAuthenticationFilter())
 			.addFilter(new JwtValidationFilter(this.authenticationManager()))
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(Customizer.withDefaults())
-			.formLogin(formLoginConfigurer -> formLoginConfigurer.loginPage("/auth/login"))
+			.formLogin(AbstractHttpConfigurer::disable)
 			.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.build();
 	}
@@ -83,16 +81,5 @@ public class SecurityConfig {
 					.allowedHeaders("*");
 			}
 		};
-	}
-
-	/**
-	 * Creates and configure a JwtAuthenticationFilter.
-	 * @return
-	 * @throws Exception
-	 */
-	private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-		var filter = new JwtAuthenticationFilter(this.authenticationManager(), this.mapper);
-		filter.setFilterProcessesUrl("/auth/login");
-		return filter;
 	}
 }

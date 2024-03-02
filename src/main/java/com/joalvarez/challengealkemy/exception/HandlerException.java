@@ -3,9 +3,11 @@ package com.joalvarez.challengealkemy.exception;
 import com.joalvarez.challengealkemy.constants.ErrorCode;
 import com.joalvarez.challengealkemy.data.dto.generals.HttpDTO;
 import com.joalvarez.challengealkemy.data.dto.generals.ResponseDTO;
+import com.joalvarez.challengealkemy.exception.generals.AuthException;
 import com.joalvarez.challengealkemy.shared.HasLogger;
 import com.joalvarez.challengealkemy.exception.generals.HttpErrorException;
 import com.joalvarez.challengealkemy.exception.generals.GenericException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -67,5 +69,13 @@ public class HandlerException implements HasLogger {
 		this.warn(e.getMessage());
 
 		return ResponseEntity.badRequest().body(new ResponseDTO(e.getResponseCode(), e.getMessage(), List.of()));
+	}
+
+	@ExceptionHandler(AuthException.class)
+	public ResponseEntity<ResponseDTO> handle(AuthException e) {
+		this.warn(e.getMessage());
+
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(
+			ErrorCode.USER_NOT_AUTHENTICATED.code(), ErrorCode.USER_NOT_AUTHENTICATED.message(), List.of(HttpStatus.UNAUTHORIZED.getReasonPhrase())));
 	}
 }
