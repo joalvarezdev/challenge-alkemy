@@ -1,6 +1,5 @@
 package com.joalvarez.challengealkemy.config.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joalvarez.challengealkemy.config.security.constants.SecurityProperties;
 import com.joalvarez.challengealkemy.config.security.jwt.JwtValidationFilter;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +22,6 @@ public class SecurityConfig {
 
 	private final SecurityProperties properties;
 	private final AuthenticationConfiguration authenticationConfiguration;
-	private final ObjectMapper mapper;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -36,11 +34,9 @@ public class SecurityConfig {
 	}
 
 	public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,
-						  SecurityProperties properties,
-						  ObjectMapper mapper) {
+						  SecurityProperties properties) {
 		this.authenticationConfiguration = authenticationConfiguration;
 		this.properties = properties;
-		this.mapper = mapper;
 	}
 
 	@Bean
