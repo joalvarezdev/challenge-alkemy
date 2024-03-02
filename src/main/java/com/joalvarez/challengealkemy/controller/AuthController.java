@@ -3,13 +3,12 @@ package com.joalvarez.challengealkemy.controller;
 import com.joalvarez.challengealkemy.data.dto.UserDTO;
 import com.joalvarez.challengealkemy.data.dto.generals.TokenResponseDTO;
 import com.joalvarez.challengealkemy.data.dto.generals.UserLoginDTO;
-import com.joalvarez.challengealkemy.service.interfaces.IUserService;
+import com.joalvarez.challengealkemy.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("auth")
 public class AuthController {
 
-	private final IUserService service;
+	private final AuthService service;
 
-	public AuthController(IUserService service) {
+	public AuthController(AuthService service) {
 		this.service = service;
 	}
 
@@ -32,7 +31,7 @@ public class AuthController {
 	@ApiResponse(responseCode = "201", description = "Successful operation", content = @Content(
 		mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserDTO.class)))
 	public ResponseEntity<UserDTO> register(@Valid @RequestBody UserDTO dto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.register(dto));
+		return ResponseEntity.ok(this.service.register(dto));
 	}
 
 	@PostMapping("login")
@@ -40,6 +39,6 @@ public class AuthController {
 	@ApiResponse(responseCode = "200", description = "Successful operation",
 		content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TokenResponseDTO.class)))
 	public ResponseEntity<TokenResponseDTO> login(@Valid @RequestBody UserLoginDTO dto) {
-		return ResponseEntity.ok(new TokenResponseDTO("", 0L, "Bearer"));
+		return ResponseEntity.ok(this.service.login(dto));
 	}
 }
